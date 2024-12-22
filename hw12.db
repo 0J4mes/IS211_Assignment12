@@ -1,0 +1,15 @@
+import sqlite3
+
+def init_db():
+    with sqlite3.connect('hw13.db') as conn:
+        with open('schema.sql', 'r') as f:
+            conn.executescript(f.read())
+
+        # Insert initial data
+        conn.execute("INSERT INTO students (first_name, last_name) VALUES (?, ?)", ("John", "Smith"))
+        conn.execute("INSERT INTO quizzes (subject, num_questions, quiz_date) VALUES (?, ?, ?)",
+                     ("Python Basics", 5, "2015-02-05"))
+        conn.execute("INSERT INTO results (student_id, quiz_id, score) VALUES (?, ?, ?)", (1, 1, 85))
+
+if __name__ == '__main__':
+    init_db()
